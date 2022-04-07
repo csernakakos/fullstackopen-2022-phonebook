@@ -1,10 +1,12 @@
 const express = require("express");
 const {v4: uuidv4} = require("uuid");
 const morgan = require("morgan");
-const PORT = 3002;
+const cors = require("cors");
+const PORT = process.env.PORT || 3003;
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use(morgan(function (tokens, req, res) {
 
@@ -51,10 +53,7 @@ let persons = [
 
 // GET_all_persons.rest
 app.get("/api/persons", (req, res) => {
-    res.status(200).json({
-        status: "success",
-        persons,
-    })
+    res.status(200).json(persons)
 });
 
 // GET_person.rest
@@ -69,10 +68,7 @@ app.get("/api/persons/:id", (req, res) => {
         })
     }
 
-    res.status(200).json({
-        status: "success",
-        person,
-    })
+    res.status(200).json(person)
 })
 
 // GET_info.rest
@@ -105,11 +101,10 @@ app.post("/api/persons", (req, res) => {
         number: body.number,
     }
 
+    console.log(person);
+
     persons = [...persons, person];
-    res.status(200).json({
-        status: "success",
-        persons
-    })
+    res.status(200).json(person)
 })
 
 // DELETE_person.rest
