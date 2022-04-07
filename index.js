@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 3003;
 const app = express();
 
 app.use(express.json());
+app.use(express.static('build'))
 app.use(cors());
 
 app.use(morgan(function (tokens, req, res) {
